@@ -1,5 +1,5 @@
 ---
-title: "Comparing differential expression of predicted transcripbed instergenic regions"
+title: "Comparing differential expression of predicted transcribed instergenic regions"
 author: "Amanda Yeo, Hernan Lorenzi, Orna Cohen-Fix"
 date: "2023-12-19"
 output: html_document

@@ -10,6 +10,8 @@ _2: Department of Biology, Georgetown University, Washington DC, 20057 USA_
 
 https://doi.org/10.5281/zenodo.17703432
 
+<img width="191" height="20" alt="image" src="https://github.com/user-attachments/assets/d87e4837-da00-42c7-96c8-f77f830b22a8" />
+
 Folder [STRINGTIE_intergenic](STRINGTIE_intergenic) contains pipeline to predict candidate novel intergenic transcripts in _Saccharomyces cerevisiae_ from RNAseq data.
 
 Folder [Differencial_expression](Differencial_expression) contains R markdown script ([intergenic_DE_analysis.Rmd](Differencial_expression/intergenic_DE_analysis.Rmd)) and accessory files for differential expression analysis of predicted intergenic transcripts.

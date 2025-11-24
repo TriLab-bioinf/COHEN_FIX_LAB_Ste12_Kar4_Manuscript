@@ -8,6 +8,7 @@ _2: Department of Biology, Georgetown University, Washington DC, 20057 USA_
 
 *Co-first author, **Co-Corresponding authors
 
+https://doi.org/10.5281/zenodo.17703432
 
 Folder [STRINGTIE_intergenic](STRINGTIE_intergenic) contains pipeline to predict candidate novel intergenic transcripts in _Saccharomyces cerevisiae_ from RNAseq data.
 

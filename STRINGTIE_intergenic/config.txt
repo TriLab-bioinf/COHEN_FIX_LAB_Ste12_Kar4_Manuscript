@@ -7,10 +7,10 @@ REFERENCE=./data/Saccharomyces_cerevisiae.R64-1-1.106.fa
 # Path to YeasTSS promoter clusters file
 TSS=./data/ScerYPDconsensusClusters.gff
 
-# Path to annotation file
-ANNOTATION=./data/saccharomyces_cerevisiae_R64-4-1_20230830.gff
+# Path to yeast annotation file from http://www.yeastgenome.org/ (version R64-4-1) including repeats
+ANNOTATION=./data/saccharomyces_cerevisiae_R64-4-1_20230830_with_repeats.gff
 
-# Annotation in gtf format
+# Gene annotations in gtf format from https://www.ncbi.nlm.nih.gov/ (GCA_000146045.2)
 ANNOT_GTF=./data/Saccharomyces_cerevisiae.R64-1-1.106.gtf 
 
 # Path to annotated UTRs

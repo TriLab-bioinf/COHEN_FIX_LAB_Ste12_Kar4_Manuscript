@@ -2,15 +2,18 @@
 
 set -e
 
-# Activate conda environment
+# Activate conda environment (tk_85 has stringtie v2.2.1, igvtools v2.17.3, 
+# openjdk v17.0.10 and bedtools v2.31.1)
 # conda activate tk_85
 
-# Upload config file with paths to:
-# BAM files having the following format: ${SAMPLE_PREFIX}_*.sorted.dedup.bam
-# Reference genome file Saccharomyces_cerevisiae.R64-1-1.106.fa
-# Annotation file saccharomyces_cerevisiae_R64-4-1_20230830.gff
-# Annotation file with annotations of promoter clusters from YeasTSS DB ScerYPDconsensusClusters.gff
-# Annotated UTR file Nagalakshmi_2008_5_3_UTRs_V64.bed
+# Update config file with paths to:
+# - Path to BAM directory containing BAM files named following the format: ${SAMPLE_PREFIX}_*.sorted.dedup.bam
+# - Reference genome file Saccharomyces_cerevisiae.R64-1-1.106.fa
+# - Annotation file saccharomyces_cerevisiae_R64-4-1_20230830_with_repeats.gff
+# - Annotation GTF file Saccharomyces_cerevisiae.R64-1-1.106.gtf
+# - Chromosome size file chromosome_sizes.txt
+# - Annotation file with annotations of promoter clusters from YeasTSS DB ScerYPDconsensusClusters.gff
+# - Annotated UTR file Nagalakshmi_2008_5_3_UTRs_V64.bed
 
 source config.txt
 
@@ -34,14 +37,12 @@ function my_message {
 export JAVA_HOME=/opt/anaconda3/envs/tk_85/lib/jvm
 
 # Prediction of novel intergenic transcripts
-
 ./gff2gtf.pl ${ANNOTATION} > saccharomyces_cerevisiae_R64-4-1_20230830_with_repeats.gtf
 
 # Extract LTR coords from SGD gff file
 grep LTR ${ANNOTATION} | perl -ne '@x=split /\t/;$x[3]--;$name=$1 if $x[8]=~m/Name=(\S+?);/ ;print "$x[0]\t$x[3]\t$x[4]\t$name\t.\t$x[6]\n"' > LTR.bed
 
-#for i in {1..12} {31..42}; do
-for i in {1..2}; do
+for i in {1..12} {31..42}; do
 	echo Processing sample AY${i}
 
 	# Run stranded stringtie to predict transcripts	

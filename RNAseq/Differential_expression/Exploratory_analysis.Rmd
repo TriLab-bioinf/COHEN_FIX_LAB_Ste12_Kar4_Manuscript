@@ -1,0 +1,183 @@
+
+---
+title: "Heatmap and PCA plots for exploratory analysis of RNA-seq data"
+author: "Amanda Yeo, Hernan Lorenzi, Orna Cohen-Fix"
+date: "2023-11-16"
+output: html_document
+---
+
+### Load R libraries
+
+```{r}
+library(DESeq2)  # Package for differential expression analysis
+library(pheatmap) # Package for plot heatmaps
+library(ggplot2)  # Package for plotting
+library(ggsci)   # Package for color palettes
+library(dplyr)
+```
+
+
+### Load data
+
+Hernan's code below: Basically the same as Amanda's but loads read counts and metadata for all samples and then split the tables into  genotype-specific input files.
+```{r}
+# Import read counts table into read_counts variable
+read_counts <- read.table(file = "data/read_counts_table_all_samples.txt",  
+                          header = TRUE, # First line contains column headers 
+                          row.names = 1, # Column 1 contains row names
+                          sep = "\t") 
+
+# Round read counts to the closest integer
+read_counts <- round(read_counts, digits = 0)
+
+# Read metadata table
+metadata <- read.table(file = "data/metadata.txt", 
+                       header = TRUE, 
+                       row.names = 1,
+                       sep = "\t")
+
+# Sort read_counts table so metadata and read_counts match order
+if(!unique(colnames(read_counts) == rownames(metadata))){
+  read_counts <- read_counts |> select(rownames(metadata))
+}
+
+# Include sample ids in metadata as a variable (column)
+metadata$sample_id <- c("AY31", "AY32" , "AY33" , "AY34" , "AY35" , "AY36" , "AY37" , "AY38" , "AY39" , "AY40" , "AY41" , "AY42", "AY1", "AY2", "AY3", "AY4","AY5", "AY6", "AY7", "AY8", "AY9", "AY10" , "AY11" , "AY12")
+
+# Include total read counts in metadata
+metadata$read_counts <- colSums(read_counts, na.rm = TRUE)
+metadata$pca_treat_geno <- metadata$sample_name |> gsub(pattern=" [12]-[12]",replacement="") 
+
+# Make group, strain, treatment and genotype columns as factors
+metadata <- metadata |> mutate(treatment = as.factor(treatment),
+                                strain = as.factor(strain),
+                                genotype = as.factor(genotype),
+                                experiment = as.factor(experiment),
+                                pca_treat_geno = as.factor(pca_treat_geno)
+                                )
+
+```
+
+### Prepare DESeq2 object
+
+```{r}
+# Create folder for storing plots
+dir.create(path = "./plots", showWarnings = FALSE)
+
+# Add extra metadata column with treatment and genotype data combined
+metadata$treat_geno <-  paste(metadata$treatment, metadata$genotype, sep = '_') |> as.factor()
+
+# Create DESeq2 object
+dds <- DESeqDataSetFromMatrix(countData = read_counts,
+                              colData = metadata,
+                              design = ~ experiment + treat_geno)
+
+# Make sure reference groups are "none" and "wt". 
+# This means those categories will be the denominator when calculating Log2FC.
+dds$treatment <- relevel(dds$treatment, "none")
+dds$treat_geno <- relevel(dds$treat_geno, "none_wt") 
+dds <- DESeq(dds)
+```
+
+### Figure 1: Heatmap
+
+```{r}
+# 1. Normalize counts
+dds.vst <- vst(dds, blind=TRUE)
+
+# 2. Keep genes with at least 10 reads total across all samples
+keep <- rowSums(as.data.frame(dds.vst@assays@data@listData)) >= 10
+dds.vst <- dds.vst[keep,]
+
+# 3. Calculate distances between samples
+sampleDists <- dist(t(assay(dds.vst)))
+
+# 4. Plot inter-sample distances
+sampleDistMatrix <- as.matrix(sampleDists)
+rownames(sampleDistMatrix) <- paste(rownames(sampleDistMatrix), dds.vst$treatment)
+
+hm.p <- pheatmap(mat = sampleDistMatrix,
+                clustering_distance_rows=sampleDists,
+                clustering_distance_cols=sampleDists,
+                labels_row = metadata$sample_name,
+                labels_col = metadata$sample_name
+                )
+
+ggsave(filename = "./plots/heat_map.pdf", plot = hm.p)
+
+print(hm.p)
+
+```
+
+### Figure 2: PCA plot
+
+```{r}
+#
+# --- Helper function for PCA plots ---
+#
+plot_PCA = function(object, color_by="condition", 
+                    shape_by = 19, ntop=500, size = 3,
+                    returnData=FALSE, pcs = c(1,2)){
+  # Check variables are present in object
+  intgroup = c(color_by)
+  if (shape_by != 19){intgroup <- c(intgroup, shape_by)}
+  if (!all(intgroup %in% names(colData(object)))) {
+    stop("the argument 'intgroup' should specify columns of colData(dds)")
+  }
+
+  # calculate the variance for each gene
+  rv <- rowVars(assay(object))
+
+  # select the ntop genes by variance
+  select <- order(rv, decreasing=TRUE)[seq_len(min(ntop, length(rv)))]
+
+  # perform a PCA on the data in assay(x) for the selected genes
+  pca <- prcomp(t(assay(object)[select,]))
+
+  # the contribution to the total variance for each component
+  percentVar <- pca$sdev^2 / sum( pca$sdev^2 )
+
+  
+  intgroup.df <- as.data.frame(colData(object)[, intgroup, drop=FALSE])
+  
+  # add the intgroup factors together to create a new grouping factor
+  group <- if (length(intgroup) > 1) {
+    factor(apply( intgroup.df, 1, paste, collapse=":"))
+  } else {
+    colData(object)[[intgroup]]
+  }
+
+  # assembly the data for the plot
+  d <- data.frame(PC1=pca$x[,pcs[1]], PC2=pca$x[,pcs[2]], group=group, intgroup.df, name=colnames(object))
+  colnames(d)[1] <- paste0("PC",pcs[1])
+  colnames(d)[2] <- paste0("PC",pcs[2])
+  
+  if (returnData) {
+    attr(d, "percentVar") <- percentVar[1:2]
+    return(d)
+  }
+  
+  p <- ggplot(data=d, aes_string(x=colnames(d)[1], y=colnames(d)[2], color=color_by, shape=shape_by)) + 
+    geom_point(size=size) + 
+    scale_color_lancet() +
+    xlab(paste0("PC",pcs[1],": ",round(percentVar[pcs[1]] * 100),"% variance")) +
+    ylab(paste0("PC",pcs[2],": ",round(percentVar[pcs[2]] * 100),"% variance")) +
+    coord_fixed(ratio = (max(d[,1])-min(d[,1]))/(max(d[,2])-min(d[,2])))
+  
+   p <- p + guides(color = guide_legend(title="Treatment & Genotype"),
+                   shape = guide_legend(title="Experiment"))
+}
+
+# PCA
+principal_components <- c(1,2)
+pca.p <- plot_PCA(object = dds.vst, 
+                    ntop = 500,
+                    color_by = "pca_treat_geno", 
+                    shape_by = "experiment",
+                    pcs = principal_components,
+                    returnData = FALSE)
+
+ggsave(paste0("plots/pca_by_group_PC",principal_components[1],principal_components[2],".pdf"), plot = pca.p)
+print(pca.p)
+```
+

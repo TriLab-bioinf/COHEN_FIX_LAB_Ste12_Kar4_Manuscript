@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<matrix_reduce>
+<meta>
+    <source>pfm: data/custom/YHR084W_TT3-MEME.pfm ()</source>
+    <comment>xl2134@columbia.edu</comment>
+    <date>Thu Apr 17 15:08:40 2025</date>
+    <topology>XXXXXXXXXXXXXXX</topology>
+    <seed_motif>GTTTTACGATGAAAC</seed_motif>
+</meta>
+
+<directionality>forward</directionality>
+<psam_length>15</psam_length>
+<optimal_sequence>GTTTTACGATGAAAC</optimal_sequence>
+
+<psam>
+# A            C            G            T             # no. opt  
+# +============+============+============+============ # ==+===+==
+  0            0.0714285    1            0.428571      #   1   G  
+  0.0499999    0            0            1             #   2   T  
+  0            0            0            1             #   3   T  
+  0.0499999    0            0            1             #   4   T  
+  0.181818     0.727271     0            1             #   5   T  
+  1            0            0.583332     0.166666      #   6   A  
+  0.444444     1            0.888889     0             #   7   C  
+  0.0909089    0.454545     1            0.363636      #   8   G  
+  1            0.375        0.625        0.625         #   9   A  
+  0            0            0            1             #  10   T  
+  0            0.25         1            0.499999      #  11   G  
+  1            0            0            0.3125        #  12   A  
+  1            0            0.133333     0.266666      #  13   A  
+  1            0.105263     0            0             #  14   A  
+  0            1            0.399999     0             #  15   C  
+</psam>
+</matrix_reduce>

@@ -1,0 +1,5 @@
+#DataFile	Signal/Control	FileFormat	ConditionName	ReplicateName
+../dataset_668-670_MRose/36204_Ste12_i5006_MY16679_Ste12-TAP_YPDpH3.5_-_XO_FilteredBAM.proper.q30.bam	signal	BAM	1_2_Kar4dep_Ste12_mitotic	1
+../dataset_745-MRose/39271_Ste12_i5006_MY16679_Ste12-TAP_YPDpH3.5_-_XO_FilteredBAM.proper.q30.bam	signal	BAM	1_2_Kar4dep_Ste12_mitotic	2
+../dataset_668-670_MRose/36206_Ste12_i5006_MY16682kar4--kanMX_Ste12-TAP_YPDpH3.5_-_XO_FilteredBAM.proper.q30.bam	control	BAM	1_2_Kar4dep_Ste12_mitotic	1
+../dataset_745-MRose/39273_Ste12_i5006_MY16682kar4--kanMX_Ste12-TAP_YPDpH3.5_-_XO_FilteredBAM.proper.q30.bam	control	BAM	1_2_Kar4dep_Ste12_mitotic	2

@@ -1,0 +1,4 @@
+#DataFile	Signal/Control	FileFormat	ConditionName	ReplicateName
+../dataset_668-670_MRose/36211_Kar4_i5006_MY16680_Kar4-TAP_YPDpH3.5_Alpha-factor_XO_FilteredBAM.proper.q30.bam	signal	BAM	Kar4_WT_AF	1
+../dataset_745-MRose/39278_Kar4_i5006_MY16680_Kar4-TAP_YPDpH3.5_Alpha-factor_XO_FilteredBAM.proper.q30.bam	signal	BAM	Kar4_WT_AF	2
+../dataset_668-670_MRose/36219_Kar4_i5006_MY16680_Kar4-TAP_YPDpH3.5_Alpha-factor_XO_FilteredBAM.proper.q30.bam	signal	BAM	Kar4_WT_AF	3

@@ -1,0 +1,38 @@
+# Path to folder containing raw fastq reads
+RAW_READS="READS"
+
+# 1) ----- QC ------
+# Path to fastqc output of raw reads
+FASTQC_RAW="1-fastqc-raw"
+
+# Path to fastqc output of trimmed reads
+FASTQC_TRIM="3-fastqc-trimmed"
+
+# 2) ----- Trimming ------
+# Path to folder to store trimmed reads
+TRIMMED_READS="2-trimmed-reads"
+
+# 3) ----- Read mapping ------
+# Path to folder with STAR output
+STAR_OUT="4-map-reads"
+
+# Absolute path to folder with STAR reference index files
+GENOME="/my/path/to/reference/star-db"
+
+# 4) ----- Flag duplicated reads ------
+# Path to folder with deduplicated reads
+DEDUP_OUT="5-map-dedup"
+
+# Path to piccard.jar for flag dupplicated reads
+PICARDJAR="" 
+
+# 5) ----- Generate read-counts table ------
+# Path to folder with read-counts table
+READ_COUNTS="6-read-counts"
+
+# Path to reference genome fasta file
+REF_FASTA="reference/Saccharomyces_cerevisiae.R64-1-1.106.fa"
+
+# Path to reference genome annotation file
+REF_ANNOT_GTF="reference/Saccharomyces_cerevisiae.R64-1-1.106.gtf"
+

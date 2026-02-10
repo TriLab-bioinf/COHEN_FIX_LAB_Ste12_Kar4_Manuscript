@@ -16,13 +16,16 @@ library(ggsci)   # Package for color palettes
 library(dplyr)
 ```
 
-
 ### Load data
 
-Hernan's code below: Basically the same as Amanda's but loads read counts and metadata for all samples and then split the tables into  genotype-specific input files.
 ```{r}
+
+# INPUT files
+read_counts_file <- "data/read_counts_table_all_samples.txt"
+metadata_file <- "data/metadata.txt"
+
 # Import read counts table into read_counts variable
-read_counts <- read.table(file = "data/read_counts_table_all_samples.txt",  
+read_counts <- read.table(file = read_counts_file,  
                           header = TRUE, # First line contains column headers 
                           row.names = 1, # Column 1 contains row names
                           sep = "\t") 
@@ -31,7 +34,7 @@ read_counts <- read.table(file = "data/read_counts_table_all_samples.txt",
 read_counts <- round(read_counts, digits = 0)
 
 # Read metadata table
-metadata <- read.table(file = "data/metadata.txt", 
+metadata <- read.table(file = metadata_file, 
                        header = TRUE, 
                        row.names = 1,
                        sep = "\t")

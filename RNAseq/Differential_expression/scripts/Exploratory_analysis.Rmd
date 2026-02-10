@@ -103,7 +103,7 @@ hm.p <- pheatmap(mat = sampleDistMatrix,
                 labels_col = metadata$sample_name
                 )
 
-ggsave(filename = "./plots/heat_map.pdf", plot = hm.p)
+ggsave(filename = "./plots/heat_map.png", plot = hm.p, width = 8, height = 8)
 
 print(hm.p)
 
@@ -177,7 +177,7 @@ pca.p <- plot_PCA(object = dds.vst,
                     pcs = principal_components,
                     returnData = FALSE)
 
-ggsave(paste0("plots/pca_by_group_PC",principal_components[1],principal_components[2],".pdf"), plot = pca.p)
+ggsave(paste0("plots/pca_by_group_PC",principal_components[1],principal_components[2],".png"), plot = pca.p)
 print(pca.p)
 ```
 

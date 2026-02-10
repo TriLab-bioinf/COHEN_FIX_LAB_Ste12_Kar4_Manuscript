@@ -1,6 +1,6 @@
 # Heatmap and PCA plotting (R Markdown)
 
-This folder contains the R Markdown script [Exploratory_analysis.Rmd](./scripts/Exploratory_analysis.Rmd) within the scripts directory that generates a heatmap and a PCA plot from RNA-seq read-count data to assess sample relationships and quality.
+This folder contains the R Markdown script [Exploratory_analysis.Rmd](./scripts/Exploratory_analysis.Rmd) within the [scripts](./scripts/) directory that generates a heatmap and a PCA plot from RNA-seq read-count data to assess sample relationships and quality.
 
 #### Inputs:
 

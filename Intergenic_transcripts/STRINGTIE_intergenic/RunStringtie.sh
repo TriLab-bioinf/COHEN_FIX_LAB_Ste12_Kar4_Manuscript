@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -o errexit 
 
 # Activate conda environment (tk_85 has stringtie v2.2.1, igvtools v2.17.3, 
 # openjdk v17.0.10 and bedtools v2.31.1)

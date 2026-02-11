@@ -26,3 +26,5 @@ conda env create -f environment.yml
 - stringtie v2.2.1
 
 - ucsc-wigtobigwig v366
+
+**NOTE:** These scripts provide the explicit commands used to perform the analyses described in the paper. However, they are not intended to be functional for all users without modification. Users are expected to install the required programs on their own machine (or computing cluster), then update the files to point at their own filepaths.

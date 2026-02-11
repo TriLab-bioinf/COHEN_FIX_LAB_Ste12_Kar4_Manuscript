@@ -1,6 +1,10 @@
 #!/usr/bin/perl
 use strict;
 
+# Reads input gff from stdin
+# Outputs gtf to stdout
+
+# Input:
 # I   SGD chromosome  1   230218  .   .   .   ID=chrI;dbxref=NCBI:BK006935.2;Name=chrI
 # I   SGD telomere    1   801 .   -   .   ID=TEL01L;Name=TEL01L;Note=Telomeric region on the left arm of Chromosome I  composed of an X element core sequence  X element combinatorial repeats  and a short terminal stretch of telomeric repeats;display=Telomeric region on the left arm of Chromosome I;dbxref=SGD:S000028862;curie=SGD:S000028862
 # I   SGD X_element   337 801 .   -   .   Parent=TEL01L;Name=TEL01L_X_element
@@ -14,16 +18,8 @@ use strict;
 # I   SGD CDS 538 792 .   +   0   Parent=YAL068W-A_mRNA;Name=YAL068W-A_CDS;orf_classification=Dubious;protein_id=UniProtKB:Q8TGK7
 # I   SGD mRNA    538 792 .   +   .   ID=YAL068W-A_mRNA;Name=YAL068W-A_mRNA;Parent=YAL068W-A
 # I   SGD ARS 707 776 .   .   .   ID=ARS102;Name=ARS102;Alias=ARSI-1;Note=Autonomously Replicating Sequence;display=Autonomously Replicating Sequence;dbxref=SGD:S000121252;curie=SGD:S000121252
-# I   SGD gene    1807    2169    .   -   .   ID=YAL068C;Name=YAL068C;gene=PAU8;Alias=PAU8,seripauperin PAU8;Ontology_term=GO:0003674,GO:0005575,GO:0030437,SO:0000704;Note=Protein of unknown function  member of the seripauperin multigene family encoded mainly in subtelomeric regions;display=Protein of unknown function;dbxref=SGD:S000002142;orf_classification=Verified;curie=SGD:S000002142
-# I   SGD CDS 1807    2169    .   -   0   Parent=YAL068C_mRNA;Name=YAL068C_CDS;orf_classification=Verified;protein_id=UniProtKB:P0CE92
-# I   SGD mRNA    1807    2169    .   -   .   ID=YAL068C_mRNA;Name=YAL068C_mRNA;Parent=YAL068C;transcript_id=RefSeq:NM_001181127.1
-# I   SGD gene    2480    2707    .   +   .   ID=YAL067W-A;Name=YAL067W-A;Ontology_term=GO:0003674,GO:0005575,GO:0008150,SO:0000704;Note=Putative protein of unknown function  identified by gene-trapping  microarray-based expression analysis  and genome-wide homology searching;display=Putative protein of unknown function;dbxref=SGD:S000028593;orf_classification=Uncharacterized;curie=SGD:S000028593
 
-
-# Reads gff from stdin
-# Outputs gtf to stdout
-
-
+# Gene features in the input gff:
 #   31 ncRNA_gene
 #   12 pseudogene
 #   24 rRNA_gene
@@ -33,7 +29,7 @@ use strict;
 #    1 telomerase_RNA_gene
 #   91 transposable_element_gene
 
-# outputs
+# output:
 # I	SGD	CDS	335	649	.	+	0	transcript_id "YAL069W_mRNA"; gene_id "YAL069W"; gene_name "YAL069W";
 # I	SGD	CDS	538	792	.	+	0	transcript_id "YAL068W-A_mRNA"; gene_id "YAL068W-A"; gene_name "YAL068W-A";
 

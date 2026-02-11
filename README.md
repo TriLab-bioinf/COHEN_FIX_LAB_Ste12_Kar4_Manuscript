@@ -8,8 +8,7 @@ _2: Department of Biology, Georgetown University, Washington DC, 20057 USA_
 
 *Co-first author, **Co-Corresponding authors
 
-
-[<img width="191" height="20" alt="image" src="https://github.com/user-attachments/assets/d87e4837-da00-42c7-96c8-f77f830b22a8" />](https://doi.org/10.5281/zenodo.17703432)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18611842.svg)](https://doi.org/10.5281/zenodo.18611842)
 
 Folder [ChIP/](ChIP) contains scripts and helper files for ChIP-exo processing and analysis, including read alignment and preprocessing (e.g. `00_alignreads.sh`, `01_clean_count_bam.sh`), downstream analysis with ChExMix (`02_chexmix.sh`), peak annotation and motif comparison scripts.
 
